@@ -2,6 +2,13 @@
 
 'use strict';
 
+  var a11yBurger = {};
+
+  a11yBurger.NS = "a11yBurger";
+  a11yBurger.AUTHOR = "Scott O'Hara";
+  a11yBurger.VERION = "1.0.1";
+  a11yBurger.LICENSE = "https://github.com/scottaohara/accessible-components/blob/master/LICENSE.md";
+
 
   var noJS = document.getElementsByTagName('HTML'),
       theNav = document.getElementById('the_nav'),
