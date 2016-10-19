@@ -42,7 +42,8 @@ header[role="banner"] {
   padding: 6px 0;
   position: fixed;
   top: 20px;
-  transition: transform .2s;
+  transition: transform .2s ease-in-out;
+  z-index: 99;
 }
 
 
@@ -52,7 +53,7 @@ header[role="banner"] {
   margin: 0;
   padding: 0;
   position: relative;
-  transition: font-size .2s;
+  transition: font-size .2s ease-in-out;
   white-space: nowrap;
   width: 1.25em;
 }
@@ -81,7 +82,7 @@ header[role="banner"] {
 
 
 .nav-list li {
-  display: inline-block;
+  display: none;
   list-style: none;
   margin-right: 8px;
 }
@@ -127,23 +128,23 @@ header[role="banner"] {
 
 */
 
-.nav[data-state="closed"] .nav-list {
+.btn--nav[aria-expanded="false"] .nav-list {
   pointer-events: none;
 }
 
-.nav[data-state="closed"] .nav-list li {
+.btn--nav[aria-expanded="false"] .nav-list li {
   display: none;
 }
 
-.nav[data-state="closed"] .nav-list a {
+.btn--nav[aria-expanded="false"] .nav-list a {
   color: rgba(0,0,0,0);
   font-size: .001em;
   opacity: 0;
   transition: color .2s .2s;
 }
 
-.nav[data-state="closed"] .btn--nav:focus,
-.nav[data-state="closed"] .btn--nav:hover {
+.btn--nav[aria-expanded="false"]:focus,
+.btn--nav[aria-expanded="false"]:hover {
   outline: 4px solid #000;
   outline-offset: 4px;
 }
@@ -157,7 +158,7 @@ header[role="banner"] {
 
 */
 
-.nav[data-state="open"] {
+.menu-is-open .nav {
   background: rgba(222,222,222,.9);
   padding: 0;
   transform: translate(-20px, -20px);
@@ -165,7 +166,7 @@ header[role="banner"] {
 }
 
 
-.nav[data-state="open"] .nav-list {
+.menu-is-open .nav .nav-list {
   background: rgba(0,0,0,0);
   height: 100%;
   padding: 0 0 0 72px;
@@ -173,26 +174,29 @@ header[role="banner"] {
   width: 100%;
 }
 
-  .nav[data-state='open'] .nav-list:before,
-  .nav[data-state='open'] .nav-list:after {
+  .menu-is-open .nav .nav-list:before,
+  .menu-is-open .nav .nav-list:after {
     height: 100%;
     transform: translateY(0);
     width: 4px;
   }
 
-  .nav[data-state='open'] .nav-list:after {
+  .menu-is-open .nav .nav-list:after {
     left: auto;
     right: 0;
   }
 
+.menu-is-open .nav .nav-list li {
+  display: inline-block;
+}
 
-.nav[data-state='open'] .nav-list a {
+.menu-is-open .nav .nav-list a {
   opacity: 1;
   visibility: visible;
 }
 
 
-.nav[data-state='open'] .btn--nav {
+.menu-is-open .nav .btn--nav {
   background: #808080;
   color: #fff;
   font-size: 1.75em;
@@ -202,13 +206,35 @@ header[role="banner"] {
   width: 2em;
 }
 
-  .nav[data-state="open"] .btn--nav:focus,
-  .nav[data-state="open"] .btn--nav:hover {
+  .menu-is-open .nav .btn--nav:focus,
+  .menu-is-open .nav .btn--nav:hover {
     background: #901932;
   }
 
 
+.off-screen-menu-overlay {
+  background: rgba(0,0,0,.75);
+  height: 100%;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transform-origin: center center;
+  transform: translateX(-100px);
+  transition: transform .2s ease-in-out, opacity .2s ease-in-out;
+  visibility: hidden;
+  width: 100%;
+  z-index: 90;
+}
 
+.pause-document-scroll  .off-screen-menu-overlay {
+  opacity: 1;
+  transform: translateX(0px);
+  visibility: visible;
+}
+
+.pause-document-scroll {
+  overflow: hidden;
+}
 
 
 /*
@@ -217,20 +243,27 @@ header[role="banner"] {
 
 */
 
-.btn--nav--close {
+.no-js .nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.no-js header[role="banner"] {
+  padding-top: 80px;
+}
+
+.no-js .btn--nav {
   display: none;
-  visibility: hidden;
 }
 
 .no-js .nav-list li{
   display: none
 }
 
-.no-js .nav:target .btn--nav {
-  display: none;
-}
 
-.no-js .nav:target {
+.no-js .nav-list {
   background: #ddd;
   border-bottom: 1px solid #777;
   left: 0;
@@ -238,7 +271,7 @@ header[role="banner"] {
   width: 100%
 }
 
-.no-js .nav:target .nav-list {
+.no-js .nav-list {
   background: transparent;
   height: auto;
   overflow: hidden;
@@ -246,37 +279,16 @@ header[role="banner"] {
   width: 100%;
 }
 
-.no-js .nav:target .nav-list:before,
-.no-js .nav:target .nav-list:after {
+.no-js .nav-list:before,
+.no-js .nav-list:after {
   display: none;
 }
 
-.no-js .nav:target li {
+.no-js .nav-list li {
   float: left;
   display: block;
 }
 
-.no-js .nav:target a {
+.no-js .nav-list a {
   visibility: visible;
-}
-
-.no-js .nav:target .btn--nav--close {
-  bottom: 0;
-  color: #000;
-  display: block;
-  font-size: 26px;
-  left: 0;
-  line-height: 1.5;
-  padding: 8px;
-  position: absolute;
-  text-decoration: none;
-  top: 0;
-  visibility: visible;
-  z-index: 4;
-}
-
-.no-js .btn--nav:focus ~ .nav-list,
-.no-js .btn--nav:focus ~ .nav-list {
-  outline: 4px solid #000;
-  outline-offset: 4px;
 }

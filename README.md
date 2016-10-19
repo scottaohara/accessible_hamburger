@@ -1,8 +1,8 @@
 Accessible Hamburger Button & Navigation
 ================
 
-Progressively enhanced, vanilla JavaScript, off-screen navigation & hamburger menu button.
+jQuery script to open/close a hamburger navigation.
 
-Without JavaScript, the menu is opened using the CSS ```:target```.
+Without JavaScript, the navigation gracefully degrades to be persistently open and the hamburger button is hidden from all users.
 
-With JavaScript enabled, the menu is opened & closed by toggling the navigation's ```[data-state]``` attribute.  Keyboard tabbing is then trapped to the navigation and is released back to the document once the close button has been triggered.
+An option exists to add a page overlay and trap focus within the navigation, while it's open, by adding ```data-has-overlay="true"``` to the hamburger button.  This will also add a class of ```.pause-document-scroll``` to the ```<html>``` element, negating scrolling on desktop browsers.

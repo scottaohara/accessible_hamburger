@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Single Element Hamburger Nav</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <script>
+      // remove no-js and add 'js' to the HTML
+      document.documentElement.className = document.documentElement.className.replace('no-js', " ");
+      document.documentElement.className += ' js ';
+    </script>
     <link rel="stylesheet" href="assets/css.css" />
   </head>
   <body>
@@ -13,10 +19,13 @@
       </h1>
 
       <nav class="nav" id="the_nav">
-        <a href="#the_nav" id="menu_btn" class="btn btn--nav">
-          &times;
+        <a href="#navigation"
+          id="menu_btn"
+          class="btn btn--nav"
+          aria-label="Open Navigation"
+          data-action="open-menu">
+          <span aria-hidden="true">&times;</span>
         </a>
-        <a href="#!" class="btn--nav--close">&times;</a>
         <ul class="nav-list" id="navigation">
           <li><a href="#!1">Link 1</a></li>
           <li><a href="#!2">Link 2</a></li>
@@ -55,7 +64,8 @@
       <input type="text" id="example_input" />
     </main>
 
-    <script src="assets/js.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="assets/a11y.hamburger.js"></script>
 
   </body>
 </html>
